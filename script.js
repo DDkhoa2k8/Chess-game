@@ -1,7 +1,5 @@
 function rookMove(start, end) {//debugger
-    if (start.rows == end.rows && start.cols == end.cols) {
-        return true;
-    } else if (start.rows == end.rows) {
+    if (start.rows == end.rows) {
         if (start.cols < end.cols) {
             for (let i = start.cols + 1;i < end.cols;i++) {
                 let cell = document.getElementById(`${i}-${start.rows}`);
@@ -47,10 +45,8 @@ function rookMove(start, end) {//debugger
     return false;
 }
 
-function bishop(start, end) {
-    if (start.rows == end.rows && start.cols == end.cols) {
-        return true;
-    } else if ((end.cols - start.cols) + start.rows == end.rows) {
+function bishopMove(start, end) {
+    if ((end.cols - start.cols) + start.rows == end.rows) {
         if (end.cols > start.cols) {
             for (let i = start.cols + 1;i < end.cols;i++) {
                 if (document.getElementById(`${i}-${i - start.cols + start.rows}`).children.length > 0) {
@@ -81,6 +77,38 @@ function bishop(start, end) {
             }
         }
 
+        return true;
+    }
+
+    return false;
+}
+
+function knightMove(start, end) {
+    if (start.cols + 2 == end.cols && start.rows + 1 == end.rows) {
+        return true;
+    } else if (start.cols + 2 == end.cols && start.rows - 1 == end.rows) {
+        return true;
+    } else if (start.cols - 2 == end.cols && start.rows + 1 == end.rows) {
+        return true;
+    } else if (start.cols - 2 == end.cols && start.rows - 1 == end.rows) {
+        return true;
+    } else if (start.rows + 2 == end.rows && start.cols + 1 == end.cols) {
+        return true;
+    } else if (start.rows + 2 == end.rows && start.cols - 1 == end.cols) {
+        return true;
+    } else if (start.rows - 2 == end.rows && start.cols + 1 == end.cols) {
+        return true;
+    } else if (start.rows - 2 == end.rows && start.cols - 1 == end.cols) {
+        return true;
+    }
+
+    return false;
+}
+
+function king(start, end) {
+    const dis = Math.sqrt((start.rows - end.rows) ** 2 + (start.cols - end.cols) ** 2);
+
+    if (dis < 2) {
         return true;
     }
 
@@ -215,13 +243,58 @@ function initChess() {
                 } else if (slcCP.className.includes("bishop")) {
                     const cell = slcCP.parentElement;
                     if (slcCP.className.includes('black')) {
-                        if (bishop(cell, hoverCell) && !(hoverCell?.children?.[0]?.className?.includes('black'))) {
+                        if (bishopMove(cell, hoverCell) && !(hoverCell?.children?.[0]?.className?.includes('black'))) {
                             console.log(hoverCell);
                             hoverCell.innerHTML = "";
                             hoverCell.appendChild(slcCP);
                         }
                     } else {
-                        if (bishop(cell, hoverCell) && !(hoverCell?.children?.[0]?.className?.includes('white'))) {
+                        if (bishopMove(cell, hoverCell) && !(hoverCell?.children?.[0]?.className?.includes('white'))) {
+                            console.log(hoverCell);
+                            hoverCell.innerHTML = "";
+                            hoverCell.appendChild(slcCP);
+                        }
+                    }
+                } else if (slcCP.className.includes("knight")) {
+                    const cell = slcCP.parentElement;
+                    if (slcCP.className.includes('black')) {
+                        if (knightMove(cell, hoverCell) && !(hoverCell?.children?.[0]?.className?.includes('black'))) {
+                            console.log(hoverCell);
+                            hoverCell.innerHTML = "";
+                            hoverCell.appendChild(slcCP);
+                        }
+                    } else {
+                        if (knightMove(cell, hoverCell) && !(hoverCell?.children?.[0]?.className?.includes('white'))) {
+                            console.log(hoverCell);
+                            hoverCell.innerHTML = "";
+                            hoverCell.appendChild(slcCP);
+                        }
+                    }
+                } else if (slcCP.className.includes("qeen")) {
+                    const cell = slcCP.parentElement;
+                    if (slcCP.className.includes('black')) {
+                        if ((bishopMove(cell, hoverCell) || rookMove(cell, hoverCell)) && !(hoverCell?.children?.[0]?.className?.includes('black'))) {
+                            console.log(hoverCell);
+                            hoverCell.innerHTML = "";
+                            hoverCell.appendChild(slcCP);
+                        }
+                    } else {
+                        if ((bishopMove(cell, hoverCell) || rookMove(cell, hoverCell)) && !(hoverCell?.children?.[0]?.className?.includes('white'))) {
+                            console.log(hoverCell);
+                            hoverCell.innerHTML = "";
+                            hoverCell.appendChild(slcCP);
+                        }
+                    }
+                } else {
+                    const cell = slcCP.parentElement;
+                    if (slcCP.className.includes('black')) {
+                        if (king(cell, hoverCell) && !(hoverCell?.children?.[0]?.className?.includes('black'))) {
+                            console.log(hoverCell);
+                            hoverCell.innerHTML = "";
+                            hoverCell.appendChild(slcCP);
+                        }
+                    } else {
+                        if (king(cell, hoverCell) && !(hoverCell?.children?.[0]?.className?.includes('white'))) {
                             console.log(hoverCell);
                             hoverCell.innerHTML = "";
                             hoverCell.appendChild(slcCP);
