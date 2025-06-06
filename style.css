@@ -82,18 +82,18 @@ html, body {
 }
 
 .cell {
-    /* height: 100%; */
-    /* height: 100px; */
     aspect-ratio: 1 / 1;
     display: flex;
     background-color: var(--color1);
 }
 
 .col:nth-child(odd) .cell:nth-child(odd) {
+    /* opacity: .8; */
     background-color: var(--color2);
 }
 
 .col:nth-child(even) .cell:nth-child(even) {
+    /* opacity: .8; */
     background-color: var(--color2);
 }
 
@@ -172,4 +172,49 @@ html, body {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.dialog {
+    height: 100%;
+    width: 100%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(10px);
+    position: absolute;
+}
+
+.mes {
+    height: 350px;
+    max-width: 700px;
+    width: 90%;
+    background-color: gray;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.mes div {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 10px;
+}
+
+.option {
+    height: 70px;
+    width: 70px;
+    border: 5px solid rgb(0, 170, 255);
+    border-radius: 5px;
+    background-color: rgb(0, 149, 255);
+}
+
+.option .chess-pieces {
+    transition:  transform .3s ease;
+}
+
+.option:hover .chess-pieces {
+    transform: scale(1.1);
 }
